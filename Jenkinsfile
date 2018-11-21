@@ -15,6 +15,7 @@ pipeline {
                   openshift.withCredentials( '22448925-74c0-4b32-b90c-251e2753895e' ) {
                     openshift.withProject() {
                         echo "Using project: ${openshift.project()}"
+                        def bc = openshift.newApp( 'https://github.com/openshift/ruby-hello-world' ).narrow('bc')
                     }
                     }
                 }
