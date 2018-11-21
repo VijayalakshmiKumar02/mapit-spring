@@ -16,6 +16,8 @@ pipeline {
                     openshift.withProject() {
                         echo "Using project: ${openshift.project()}"
                          echo "Hello from ${openshift.cluster()}'s default project: ${openshift.project()}"
+                       def saSelector = openshift.selector( 'serviceaccount' )
+                      saSelector.describe()
                     }
                     }
                 }
