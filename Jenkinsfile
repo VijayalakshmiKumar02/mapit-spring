@@ -8,6 +8,22 @@ pipeline {
         sh "mvn install"
       }
     }
+    stage('preamble') {
+        steps {
+            script {
+                openshift.withCluster('mycluster') {
+                  openshift.withCredentials( '22448925-74c0-4b32-b90c-251e2753895e' ) {
+                    openshift.withProject() {
+                        echo "Using project: ${openshift.project()}"
+                    }
+                    }
+                }
+            }
+        }
+    }
+    
+    
+    
     stage('Create Image Builder') {
       when {
         expression {
