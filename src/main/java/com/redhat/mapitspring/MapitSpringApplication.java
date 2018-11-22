@@ -7,6 +7,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class MapitSpringApplication {
 
     public static void main(String[] args) {
+        //Run the Application
         SpringApplication.run(MapitSpringApplication.class, args);
     }
 }
