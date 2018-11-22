@@ -8,39 +8,30 @@ pipeline {
         sh "mvn install"
       }
     }
-    stage('preamble') {
-        steps {
-            script {
-                openshift.withCluster('mycluster') {
-                  openshift.withCredentials( '22448925-74c0-4b32-b90c-251e2753895e' ) {
-                    openshift.withProject() {
-                        echo "Using project: ${openshift.project()}"
-                         echo "Hello from ${openshift.cluster()}'s default project: ${openshift.project()}"
-                       def saSelector = openshift.selector( 'serviceaccount' )
-                      saSelector.describe()
-                    }
-                    }
-                }
-            }
-        }
-    }
+    
     
     
     
     stage('Create Image Builder') {
       when {
         expression {
+          def ocDir = tool "oc3.11"
+                   withEnv(["PATH+OC=${ocDir}"]) {
           openshift.withCluster('mycluster') {
             openshift.withCredentials( '22448925-74c0-4b32-b90c-251e2753895e' ) {
             return !openshift.selector("bc", "mapit").exists();
+            }
             }
           }
         }
       }
       steps {
         script {
+          def ocDir = tool "oc3.11"
+                   withEnv(["PATH+OC=${ocDir}"]) {
           openshift.withCluster('mycluster') {
             openshift.newBuild("--name=mapit", "--image-stream=redhat-openjdk18-openshift:1.1", "--binary")
+          }
           }
         }
       }
@@ -48,8 +39,11 @@ pipeline {
     stage('Build Image') {
       steps {
         script {
+          def ocDir = tool "oc3.11"
+                   withEnv(["PATH+OC=${ocDir}"]) {
           openshift.withCluster('mycluster') {
             openshift.selector("bc", "mapit").startBuild("--from-file=target/mapit-spring.jar", "--wait")
+          }
           }
         }
       }
