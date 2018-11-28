@@ -10,6 +10,7 @@ RUN mvn install
 
 
 FROM fabric8/java-jboss-openjdk8-jdk:1.2.3
+WORKDIR /app
 
 ENV JAVA_APP_JAR mapit-spring-0.0.1-SNAPSHOT.jar
 ENV AB_ENABLED off
