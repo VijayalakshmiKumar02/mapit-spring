@@ -1,4 +1,19 @@
 pipeline {
+agent{
+      label 'maven'
+  }
+  stages {
+  stage(‘Cloning Git’) {
+      steps {
+        git ‘https://github.com/gustavoapolinario/microservices-node-example-todo-frontend.git'
+      }
+    }
+    stage('Build App') {
+      steps {
+        sh "mvn install"
+        
+      }
+    }
     agent { dockerfile true }
     stages {
         stage('Test') {
