@@ -31,7 +31,7 @@ agent{
     stage('Deploy Image') {
       steps{
          script {
-            docker.withRegistry( '',dockerRegistry, registryCredential ) {
+            docker.withRegistry( '', registryCredential ) {
             dockerImage.push()
           }
         }
