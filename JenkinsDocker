@@ -13,6 +13,7 @@ agent{
         git ‘https://github.com/VijayalakshmiKumar02/mapit-spring.git'
       }
     }
+    }
     stage('Build App') {
       steps {
         sh "mvn install"
@@ -36,4 +37,4 @@ agent{
       }
     }
   }  
-}
+
