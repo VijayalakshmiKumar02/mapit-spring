@@ -1,14 +1,16 @@
 pipeline {
 environment {
-    registry = “jesudoss/mapit-openshift”
-    registryCredential = ‘b0360de8-fc57-458b-8471-ff693c8ee5c6’
-    dockerImage = ‘’
+    registry = "jesudoss/mapit-openshift"
+    registryCredential = 'dockerhub'
+    dockerImage = ''
   }
-agent maven
+agent{ 
+  label 'maven'
+}
   stages {
-  stage(‘Cloning Git’) {
+  stage('Cloning Git') {
       steps {
-        git ‘https://github.com/VijayalakshmiKumar02/mapit-spring.git'
+        git 'https://github.com/VijayalakshmiKumar02/mapit-spring.git'
       }
     }
     
@@ -18,17 +20,17 @@ agent maven
         
       }
     }
-    stage(‘Building image’) {
+    stage('Building image') {
       steps{
         script {
-          dockerImage = docker.build registry + “:$BUILD_NUMBER”
+          dockerImage = docker.build registry + ":$BUILD_NUMBER"
         }
       }
     }
-    stage(‘Deploy Image’) {
+    stage('Deploy Image') {
       steps{
          script {
-            docker.withRegistry( ‘’, registryCredential ) {
+            docker.withRegistry( '', registryCredential ) {
             dockerImage.push()
           }
         }
