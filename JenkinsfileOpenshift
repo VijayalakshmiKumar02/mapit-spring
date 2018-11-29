@@ -11,7 +11,7 @@ pipeline {
                    withEnv(["PATH+OC=${ocDir}"]) {
           openshift.withCluster('mycluster') {
             openshift.withCredentials( '22448925-74c0-4b32-b90c-251e2753895e' ) {
-           def created = openshift.newApp('jesudoss/mapit-openshift:latest')
+              openshift.newApp('jesudoss/mapit-openshift:latest')narrow('svc').expose()
             }
           }
           }
