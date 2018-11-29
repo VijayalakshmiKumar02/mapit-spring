@@ -3,6 +3,7 @@ environment {
     registry = "jesudoss/mapit-openshift"
     registryCredential = 'dockerhub'
     dockerImage = ''
+    REGISTRY="https://registry.hub.docker.com"
   }
 agent{ 
   label 'maven'
@@ -30,7 +31,7 @@ agent{
     stage('Deploy Image') {
       steps{
          script {
-            docker.withRegistry( '', registryCredential ) {
+            docker.withRegistry( '',REGISTRY, registryCredential ) {
             dockerImage.push()
           }
         }
