@@ -10,7 +10,7 @@
 
 
 FROM fabric8/java-jboss-openjdk8-jdk:1.2.3
-WORKDIR /app
+WORKDIR /
 #COPY --from=0 app/target/mapit-spring.jar /app 
 #ENV JAVA_APP_JAR mapit-spring-0.0.1-SNAPSHOT.jar
 #ENV AB_ENABLED off
@@ -20,4 +20,4 @@ WORKDIR /app
 #EXPOSE 8080
 
 #RUN chmod -R 777 /deployments/
-ADD app/target/mapit-spring.jar /app
+ADD target/mapit-spring.jar mapit-spring.jar
