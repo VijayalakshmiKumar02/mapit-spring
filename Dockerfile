@@ -11,7 +11,7 @@
 
 FROM fabric8/java-jboss-openjdk8-jdk:1.2.3
 WORKDIR /app
-COPY --from=1 app/target/mapit-spring.jar /app 
+COPY --from=0 app/target/mapit-spring.jar /app 
 #ENV JAVA_APP_JAR mapit-spring-0.0.1-SNAPSHOT.jar
 #ENV AB_ENABLED off
 #ENV AB_JOLOKIA_AUTH_OPENSHIFT true
