@@ -1,0 +1,18 @@
+pipeline {
+ stages {
+    stage('Create oc new appr') {
+      when {
+        expression {
+          def ocDir = tool "oc3.11"
+                   withEnv(["PATH+OC=${ocDir}"]) {
+          openshift.withCluster('mycluster') {
+            openshift.withCredentials( '22448925-74c0-4b32-b90c-251e2753895e' ) {
+              def created = openshift.newApp( '' )
+
+            }
+            }
+          }
+        }
+      }
+}
+}
