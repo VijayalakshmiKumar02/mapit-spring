@@ -1,11 +1,16 @@
 pipeline {
+environment {
+    registry = “jesudoss/mapit-openshift”
+    registryCredential = ‘b0360de8-fc57-458b-8471-ff693c8ee5c6’
+    dockerImage = ‘’
+  }
 agent{
       label 'maven'
   }
   stages {
   stage(‘Cloning Git’) {
       steps {
-        git ‘https://github.com/gustavoapolinario/microservices-node-example-todo-frontend.git'
+        git ‘https://github.com/VijayalakshmiKumar02/mapit-spring.git'
       }
     }
     stage('Build App') {
@@ -14,12 +19,21 @@ agent{
         
       }
     }
-    agent { dockerfile true }
-    stages {
-        stage('Test') {
-            steps {
-                echo 'Hello from dockerfile'
-            }
+    stage(‘Building image’) {
+      steps{
+        script {
+          dockerImage = docker.build registry + “:$BUILD_NUMBER”
         }
+      }
     }
+    stage(‘Deploy Image’) {
+      steps{
+         script {
+            docker.withRegistry( ‘’, registryCredential ) {
+            dockerImage.push()
+          }
+        }
+      }
+    }
+  }  
 }
