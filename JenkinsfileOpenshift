@@ -3,25 +3,7 @@ pipeline {
       label 'maven'
   }
  stages {
-   stage('Clean Up'){
-      steps {
-        script {
-          def ocDir = tool "oc3.11"
-                   withEnv(["PATH+OC=${ocDir}"]) {
-          openshift.withCluster('mycluster') {
-            openshift.withCredentials( '22448925-74c0-4b32-b90c-251e2753895e' ) {
-             openshift.selector("all", [ app : mapit-openshift ]).delete() 
-                  if (openshift.selector("secrets", mapit-openshift).exists()) { 
-                    openshift.selector("secrets", mapit-openshift).delete() 
-                    }
-                  }
-                 }
-                }
-              }
-             }
-           }
-   
-   }
+    
    stage('Create oc new app') {
       steps {
         script {
