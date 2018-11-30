@@ -21,7 +21,7 @@ pipeline {
              }
            }
    
-   } 
+   }
    stage('Create oc new app') {
       steps {
         script {
