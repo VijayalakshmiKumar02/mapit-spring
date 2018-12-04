@@ -1,8 +1,9 @@
 pipeline {
   agent{
-      label 'maven'
-    def ocDir = tool "oc3.11"
-                   
+      label 'maven'               
+  }
+  node(agent) {
+    def ocDir = tool "oc1.3.2"
   }
   stages {
     stage('Build App') {
