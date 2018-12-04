@@ -1,9 +1,7 @@
 pipeline {
   agent{
-      label 'maven'               
+      label 'maven'
   }
-
-  
   stages {
     stage('Build App') {
       steps {
@@ -18,7 +16,7 @@ pipeline {
     stage('Create Image Builder') {
       when {
         expression {
-                  def ocDir = tool "oc1.3.2"
+          def ocDir = tool "oc3.11"
                    withEnv(["PATH+OC=${ocDir}"]) {
           openshift.withCluster('mycluster') {
             openshift.withCredentials( '22448925-74c0-4b32-b90c-251e2753895e' ) {
@@ -31,7 +29,7 @@ pipeline {
       }
       steps {
         script {
-           def ocDir = tool "oc1.3.2"
+          def ocDir = tool "oc3.11"
                    withEnv(["PATH+OC=${ocDir}"]) {
           openshift.withCluster('mycluster') {
             openshift.withCredentials( '22448925-74c0-4b32-b90c-251e2753895e' ) {
@@ -45,7 +43,7 @@ pipeline {
     stage('Build Image') {
       steps {
         script {
-           def ocDir = tool "oc1.3.2"
+          def ocDir = tool "oc3.11"
                    withEnv(["PATH+OC=${ocDir}"]) {
           openshift.withCluster('mycluster') {
             openshift.withCredentials( '22448925-74c0-4b32-b90c-251e2753895e' ) {
@@ -59,7 +57,7 @@ pipeline {
     stage('Promote to DEV') {
       steps {
         script {
-            def ocDir = tool "oc1.3.2"
+           def ocDir = tool "oc3.11"
                    withEnv(["PATH+OC=${ocDir}"]) {
           openshift.withCluster('mycluster') {
             openshift.withCredentials( '22448925-74c0-4b32-b90c-251e2753895e' ) {
@@ -73,7 +71,7 @@ pipeline {
     stage('Create DEV') {
       when {
         expression {
-            def ocDir = tool "oc1.3.2"
+           def ocDir = tool "oc3.11"
                    withEnv(["PATH+OC=${ocDir}"]) {
           openshift.withCluster('mycluster') {
             openshift.withCredentials( '22448925-74c0-4b32-b90c-251e2753895e' ) {
@@ -85,7 +83,7 @@ pipeline {
       }
       steps {
         script {
-            def ocDir = tool "oc1.3.2"
+           def ocDir = tool "oc3.11"
                    withEnv(["PATH+OC=${ocDir}"]) {
           openshift.withCluster('mycluster') {
             openshift.withCredentials( '22448925-74c0-4b32-b90c-251e2753895e' ) {
@@ -99,7 +97,7 @@ pipeline {
     stage('Promote STAGE') {
       steps {
         script {
-            def ocDir = tool "oc1.3.2"
+           def ocDir = tool "oc3.11"
                    withEnv(["PATH+OC=${ocDir}"]) {
           openshift.withCluster('mycluster') {
             openshift.withCredentials( '22448925-74c0-4b32-b90c-251e2753895e' ) {
@@ -113,7 +111,7 @@ pipeline {
     stage('Create STAGE') {
       when {
         expression {
-            def ocDir = tool "oc1.3.2"
+           def ocDir = tool "oc3.11"
                    withEnv(["PATH+OC=${ocDir}"]) {
           openshift.withCluster('mycluster') {
             openshift.withCredentials( '22448925-74c0-4b32-b90c-251e2753895e' ) {
@@ -125,7 +123,7 @@ pipeline {
       }
       steps {
         script {
-            def ocDir = tool "oc1.3.2"
+           def ocDir = tool "oc3.11"
                    withEnv(["PATH+OC=${ocDir}"]) {
           openshift.withCluster('mycluster') {
             openshift.withCredentials( '22448925-74c0-4b32-b90c-251e2753895e' ) {
