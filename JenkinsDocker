@@ -3,7 +3,7 @@ environment {
     registry = "jesudoss/mapit-openshift"
     registryCredential = 'dockerhub'
     dockerImage = ''
-    dockerRegistry="https://registry.hub.docker.com"
+    #dockerRegistry="https://registry.hub.docker.com"
   }
 agent{ 
   label 'maven'
