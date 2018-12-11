@@ -1,0 +1,43 @@
+pipeline {
+environment {
+    registry = "jesudoss/mapit-openshift"
+    registryCredential = 'dockerhub'
+    dockerImage = ''
+    //dockerRegistry="https://registry.hub.docker.com"
+  }
+agent{ 
+  label 'maven'
+}
+  stages {
+  stage('Cloning Git') {
+      steps {
+        git 'https://github.com/VijayalakshmiKumar02/mapit-spring.git'
+      }
+    }
+    
+    stage('Build App') {
+      steps {
+        sh "mvn install"
+        
+      }
+    }
+    stage('Building image') {
+      steps{
+        script {
+          dockerImage = docker.build registry + "testdockerimage"+":$BUILD_NUMBER"
+        }
+      }
+    }
+    stage('Deploy Image') {
+      steps{
+         script {
+            docker.withRegistry( '', registryCredential ) {
+            dockerImage.push();
+            dockerImage.push("latest");
+          }
+        }
+      }
+    }
+  }  
+
+}
