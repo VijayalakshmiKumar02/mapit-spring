@@ -1,0 +1,62 @@
+pipeline
+{
+    agent{
+      label 'maven'
+          }
+            stages{
+			
+            stage('preamble'){
+                steps{
+                    script{
+                openshift.withCluster() {
+                    openshift.withProject() {
+                        echo "Using project: ${openshift.project()}"
+                    }
+                }
+            }
+                }
+            }
+            
+            stage('Create App'){
+                steps{
+                    script{
+                openshift.withCluster() {
+                    openshift.withProject() {
+                    openshift.newApp( 'https://github.com/VijayalakshmiKumar02/mapit-spring' )
+					}
+				}
+				}
+				}
+			}
+
+    
+    stage('deploy'){
+        steps{
+            script{
+                 openshift.withCluster() {
+                    openshift.withProject() {
+                        def dc = openshift.selector("dc", "mapit-spring")
+                            echo "Calling deployment rollout"
+                            dc.rollout().status()
+                          }
+                    }
+                }
+        }
+    }
+        
+                stage('expose service'){
+                    steps{
+                        script{
+                        openshift.withCluster() {
+                    openshift.withProject() {
+                       echo "Calling expose service."
+                         def svc = openshift.selector('svc', "mapit-spring")
+                        svc.expose()
+                        echo "Service exposed"
+                    }
+                        }
+                        }
+                    }
+                }
+}
+}
