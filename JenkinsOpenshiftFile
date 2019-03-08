@@ -37,8 +37,7 @@ pipeline
                     script{
                 openshift.withCluster() {
                     openshift.withProject() {
-                    def bc = openshift.newApp( 'https://github.com/VijayalakshmiKumar02/mapit-spring' ).narrow('bc')
-		     openshift.startBuild("bc", "mapit-spring")
+                    def bc = openshift.newApp( 'https://github.com/VijayalakshmiKumar02/mapit-spring' )
 
     
                 }
