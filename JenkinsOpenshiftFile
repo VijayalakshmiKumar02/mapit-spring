@@ -16,6 +16,21 @@ pipeline
             }
                 }
             }
+	    stage('cleanup'){
+                steps{
+                    script{
+                 openshift.withCluster() {
+                    openshift.withProject() {
+                        def templateName = 'mapit-spring'
+                       openshift.selector("all", [ app : templateName ]).delete() 
+                  if (openshift.selector("secrets", templateName).exists()) { 
+                    openshift.selector("secrets", templateName).delete()
+                  }
+                    }
+                }
+            }
+                }
+            }
             
             stage('Create App'){
                 steps{
