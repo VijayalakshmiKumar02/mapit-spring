@@ -21,7 +21,7 @@ pipeline {
           
           openshift.withCluster() {
             
-            openshift.newBuild("--name=mapit", "--image-stream=redhat-openjdk18-openshift:1.1", "--binary")
+            openshift.newBuild("--name=mapit1", "--image-stream=redhat-openjdk18-openshift:1.1", "--binary")
             }
           }
           }
@@ -35,7 +35,7 @@ pipeline {
           
           openshift.withCluster() {
             
-            openshift.selector("bc", "mapit").startBuild("--from-file=target/mapit-spring.jar", "--wait")
+            openshift.selector("bc", "mapit1").startBuild("--from-file=target/mapit-spring.jar", "--wait")
             }
           }
           }
@@ -47,7 +47,7 @@ pipeline {
         script{
           openshift.withCluster() {
             
-            openshift.newApp("mapit", "--name=mapit")
+            openshift.newApp("mapit1", "--name=mapit1")
             }
           }
           }
