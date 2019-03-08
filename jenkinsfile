@@ -42,7 +42,7 @@ pipeline {
         }
       
     
-   
+   stage('expose service'){
       steps {
         script{
           openshift.withCluster() {
@@ -51,6 +51,7 @@ pipeline {
             }
           }
           }
+	  }
         
       }
      }
