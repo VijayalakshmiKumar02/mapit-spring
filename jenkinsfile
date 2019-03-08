@@ -47,7 +47,7 @@ pipeline {
         script{
           openshift.withCluster() {
             
-            openshift.newApp("mapit", "--name=mapit").narrow('svc').expose()
+            openshift.newApp("mapit", "--name=mapit")
             }
           }
           }
