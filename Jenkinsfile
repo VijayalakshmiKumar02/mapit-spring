@@ -19,7 +19,7 @@ pipeline {
           def ocDir = tool "oc3.11"
                    withEnv(["PATH+OC=${ocDir}"]) {
           openshift.withCluster('mycluster') {
-            openshift.withCredentials( '22448925-74c0-4b32-b90c-251e2753895e' ) {
+            openshift.withCredentials( '634c0960-83cf-4004-9298-41d887aa19aa' ) {
               echo "In project: ${openshift.project()}"
             return !openshift.selector("bc", "mapit").exists();
             }
@@ -32,7 +32,7 @@ pipeline {
           def ocDir = tool "oc3.11"
                    withEnv(["PATH+OC=${ocDir}"]) {
           openshift.withCluster('mycluster') {
-            openshift.withCredentials( '22448925-74c0-4b32-b90c-251e2753895e' ) {
+            openshift.withCredentials( '634c0960-83cf-4004-9298-41d887aa19aa' ) {
             openshift.newBuild("--name=mapit", "--image-stream=redhat-openjdk18-openshift:1.1", "--binary")
             }
           }
@@ -46,7 +46,7 @@ pipeline {
           def ocDir = tool "oc3.11"
                    withEnv(["PATH+OC=${ocDir}"]) {
           openshift.withCluster('mycluster') {
-            openshift.withCredentials( '22448925-74c0-4b32-b90c-251e2753895e' ) {
+            openshift.withCredentials( '634c0960-83cf-4004-9298-41d887aa19aa' ) {
             openshift.selector("bc", "mapit").startBuild("--from-file=target/mapit-spring.jar", "--wait")
             }
           }
@@ -60,7 +60,7 @@ pipeline {
            def ocDir = tool "oc3.11"
                    withEnv(["PATH+OC=${ocDir}"]) {
           openshift.withCluster('mycluster') {
-            openshift.withCredentials( '22448925-74c0-4b32-b90c-251e2753895e' ) {
+            openshift.withCredentials( '634c0960-83cf-4004-9298-41d887aa19aa' ) {
             openshift.tag("mapit:latest", "mapit:dev")
             }
           }
@@ -74,7 +74,7 @@ pipeline {
            def ocDir = tool "oc3.11"
                    withEnv(["PATH+OC=${ocDir}"]) {
           openshift.withCluster('mycluster') {
-            openshift.withCredentials( '22448925-74c0-4b32-b90c-251e2753895e' ) {
+            openshift.withCredentials( '634c0960-83cf-4004-9298-41d887aa19aa' ) {
             return !openshift.selector('dc', 'mapit-dev').exists()
             }
           }
@@ -86,7 +86,7 @@ pipeline {
            def ocDir = tool "oc3.11"
                    withEnv(["PATH+OC=${ocDir}"]) {
           openshift.withCluster('mycluster') {
-            openshift.withCredentials( '22448925-74c0-4b32-b90c-251e2753895e' ) {
+            openshift.withCredentials( '634c0960-83cf-4004-9298-41d887aa19aa' ) {
             openshift.newApp("mapit:latest", "--name=mapit-dev").narrow('svc').expose()
             }
           }
@@ -100,7 +100,7 @@ pipeline {
            def ocDir = tool "oc3.11"
                    withEnv(["PATH+OC=${ocDir}"]) {
           openshift.withCluster('mycluster') {
-            openshift.withCredentials( '22448925-74c0-4b32-b90c-251e2753895e' ) {
+            openshift.withCredentials( '634c0960-83cf-4004-9298-41d887aa19aa' ) {
             openshift.tag("mapit:dev", "mapit:stage")
             }
           }
@@ -114,7 +114,7 @@ pipeline {
            def ocDir = tool "oc3.11"
                    withEnv(["PATH+OC=${ocDir}"]) {
           openshift.withCluster('mycluster') {
-            openshift.withCredentials( '22448925-74c0-4b32-b90c-251e2753895e' ) {
+            openshift.withCredentials( '634c0960-83cf-4004-9298-41d887aa19aa' ) {
             return !openshift.selector('dc', 'mapit-stage').exists()
             }
           }
@@ -126,7 +126,7 @@ pipeline {
            def ocDir = tool "oc3.11"
                    withEnv(["PATH+OC=${ocDir}"]) {
           openshift.withCluster('mycluster') {
-            openshift.withCredentials( '22448925-74c0-4b32-b90c-251e2753895e' ) {
+            openshift.withCredentials( '634c0960-83cf-4004-9298-41d887aa19aa' ) {
             openshift.newApp("mapit:stage", "--name=mapit-stage").narrow('svc').expose()
             }
           }
