@@ -48,7 +48,7 @@ pipeline {
           openshift.withCluster() {
             
             openshift.newApp("mapit1", "--name=mapit1")
-	     def svc = openshift.selector('svc', "mapit1)
+	     def svc = openshift.selector('svc', "mapit1")
 	     svc.expose()
 	     echo "service exposed"
             }
