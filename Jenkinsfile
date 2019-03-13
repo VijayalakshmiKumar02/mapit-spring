@@ -3,7 +3,7 @@ pipeline {
       label 'maven'
   }
   stages {
-    stage('Build openshift Application from mapit branch') {
+    stage('Build openshift App from mapit branch') {
       steps {
         sh "mvn install"
         
