@@ -9,7 +9,21 @@ pipeline {
         
       }
     }
-    
+     stage('cleanup app'){
+                steps{
+                    script{
+                 openshift.withCluster() {
+                    openshift.withProject() {
+                        def templateName = 'mapit-branch'
+                       openshift.selector("all", [ app : templateName ]).delete() 
+                  if (openshift.selector("secrets", templateName).exists()) { 
+                    openshift.selector("secrets", templateName).delete()
+                  }
+                    }
+                }
+            }
+                }
+            }
     
     
     
@@ -21,7 +35,7 @@ pipeline {
           
           openshift.withCluster() {
             
-            openshift.newBuild("--name=mapit1", "--image-stream=redhat-openjdk18-openshift:1.1", "--binary")
+            openshift.newBuild("--name=mapit-branch", "--image-stream=redhat-openjdk18-openshift:1.1", "--binary")
             }
           }
           }
@@ -35,7 +49,7 @@ pipeline {
           
           openshift.withCluster() {
             
-            openshift.selector("bc", "mapit1").startBuild("--from-file=target/mapit-spring.jar", "--wait")
+            openshift.selector("bc", "mapit-branch").startBuild("--from-file=target/mapit-spring.jar", "--wait")
             }
           }
           }
@@ -47,8 +61,8 @@ pipeline {
         script{
           openshift.withCluster() {
             
-            openshift.newApp("mapit1", "--name=mapit1")
-	     def svc = openshift.selector('svc', "mapit1")
+            openshift.newApp("mapit-branch", "--name=mapit-branch")
+	     def svc = openshift.selector('svc', "mapit-branch")
 	     svc.expose()
 	     echo "service exposed"
             }
