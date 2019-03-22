@@ -3,13 +3,27 @@ pipeline {
       label 'maven'
   }
   stages {
-    stage('Build Openshift Application from mapit branch') {
+    stage('Build Openshift Application from master branch') {
       steps {
         sh "mvn install"
         
       }
     }
-    
+     stage('cleanup app'){
+                steps{
+                    script{
+                 openshift.withCluster() {
+                    openshift.withProject() {
+                        def templateName = 'mapit'
+                       openshift.selector("all", [ app : templateName ]).delete() 
+                  if (openshift.selector("secrets", templateName).exists()) { 
+                    openshift.selector("secrets", templateName).delete()
+                  }
+                    }
+                }
+            }
+                }
+            }
     
     
     
